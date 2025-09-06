@@ -24,6 +24,12 @@ interface DefaultProps {
   isActive: boolean;
   ticketGroups: NormalizedTicketGroup[];
   name: string;
+  language?: string;
+  currency?: string;
+  row?: string | number;
+  listingLabel?: string;
+  sectionLabel?: string;
+  startingAtLabel?: string;
 }
 
 interface Point {
@@ -167,6 +173,14 @@ export default class Tooltip extends Component<Props & DefaultProps> {
     };
   }
 
+  private formatPrice(value: number): string {
+    return new Intl.NumberFormat(this.props.language, {
+      style: 'currency',
+      currency: this.props.currency,
+    }).format(value);
+  }
+
+
   render() {
     const prices = this.props.ticketGroups
       .map((ticketGroup) => ticketGroup.price)
@@ -182,14 +196,14 @@ export default class Tooltip extends Component<Props & DefaultProps> {
         <div style={this.contentStyle()}>
           <div style={this.nameStyle()}>
             <div style={this.swatchStyle()} />
-            {this.props.name}
+            {this.props.sectionLabel || 'Section'} {this.props.name}
           </div>
           <div>
-            {this.props.ticketGroups.length} listing
+            {this.props.ticketGroups.length} {this.props.listingLabel || 'listing'}
             {prices.length !== 1 ? "s" : ""}
             {" ● "}
-            Starting at{" "}
-            <span style={this.priceStyle()}>{formatCurrency(prices[0])}</span>
+            {this.props.startingAtLabel || 'Starting at'}{" "}
+            <span style={this.priceStyle()}>{this.formatPrice(prices[0])}</span>
           </div>
         </div>
       </div>

@@ -28,6 +28,9 @@ const optionalConfigKeys: (keyof DefaultProps)[] = [
   "openLegendInitially",
   "mouseControlEnabled",
   "showZoomHelper",
+  "language",
+  "currency",
+  "labels",
 ];
 
 export function extractConfigurationFromOptions(options: Props): Props {

@@ -42,6 +42,19 @@ export interface DefaultProps {
   mouseControlEnabled: boolean;
   showZoomHelper: boolean;
   missingSeatMapLogo?: React.ReactNode;
+  language?: string;
+  currency?: string;
+  labels?: {
+    listing?: string;
+    section?: string;
+    startingAt?: string;
+    legend?: string;
+    clear?: string;
+    all?: string;
+    zoomIn?: string;
+    zoomOut?: string;
+    resetZoom?: string;
+  };
 }
 
 export interface RequiredProps {

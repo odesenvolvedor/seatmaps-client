@@ -73,6 +73,14 @@ export class TicketMap extends Component<Props & DefaultProps, State> {
     mouseControlEnabled: true,
     showZoomHelper: true,
     mapFontFamily: "inherit",
+    language: 'en-US',
+    currency: 'USD',
+    labels: {
+      listing: 'listing',
+      section: 'Section',
+      startingAt: 'Starting at',
+      legend: 'Map Legend',
+    },
   };
 
   constructor(props: Props & DefaultProps) {
@@ -644,6 +652,11 @@ export class TicketMap extends Component<Props & DefaultProps, State> {
             isActive={this.state.tooltipActive}
             x={this.state.tooltipX}
             y={this.state.tooltipY}
+            currency={this.props.currency}
+            language={this.props.language}
+            listingLabel={this.props.labels?.listing || 'listing'}
+            sectionLabel={this.props.labels?.section || 'Section'}
+            startingAtLabel={this.props.labels?.startingAt || 'Starting at'}
             name={this.state.tooltipSectionName}
             color={
               this.state.currentHoveredSection
@@ -677,6 +690,14 @@ export class TicketMap extends Component<Props & DefaultProps, State> {
             }
             showControls={this.props.showControls}
             openLegendInitially={this.props.openLegendInitially}
+            legendLabel={this.props.labels?.legend || 'Map Legend'}
+            currency={this.props.currency}
+            language={this.props.language}
+            clearLabel={this.props.labels?.clear || 'Clear'}
+            allLabel={this.props.labels?.all || 'All'}
+            zoomInLabel={this.props.labels?.zoomIn || 'Zoom In'}
+            zoomOutLabel={this.props.labels?.zoomOut || 'Zoom Out'}
+            resetZoomLabel={this.props.labels?.resetZoom || 'Reset'}
             onZoomIn={this.handleZoomIn}
             onZoomOut={this.handleZoomOut}
             onResetZoom={this.handleResetZoom}

@@ -23,6 +23,14 @@ interface DefaultProps {
   showLegendOpenAlwaysForDesktop: boolean;
   openLegendInitially: boolean;
   showControls: boolean;
+  currency?: string;
+  language?: string;
+  legendLabel?: string;
+  clearLabel?: string;
+  allLabel?: string;
+  zoomInLabel?: string;
+  zoomOutLabel?: string;
+  resetZoomLabel?: string;
   onClearSelection(): void;
 }
 
@@ -130,6 +138,7 @@ export default class Actions extends React.Component<
                   style={{ borderRight: "2px solid lightgray" }}
                   name="zoom-in"
                   data-testid="zoom-in"
+                  title={this.props.zoomInLabel || (isMobile ? "" : "Zoom In")}
                 />
 
                 <Button
@@ -139,12 +148,13 @@ export default class Actions extends React.Component<
                   style={{ borderRight: "2px solid lightgray" }}
                   name="zoom-out"
                   data-testid="zoom-out"
+                  title={this.props.zoomOutLabel || (isMobile ? "" : "Zoom Out")}
                 />
 
                 <Button
                   onClick={this.props.onResetZoom}
                   icon={<IconUndo />}
-                  text="Reset Zoom"
+                  text={this.props.resetZoomLabel || (isMobile ? "" : "Reset")}
                   isMobile={isMobile}
                   style={{ borderRight: "2px solid lightgray" }}
                   name="reset-zoom"
@@ -157,7 +167,7 @@ export default class Actions extends React.Component<
                 className="clear-selection"
                 onClick={this.props.onClearSelection}
                 icon={<IconClose />}
-                text={`Clear${isMobile ? "" : " All"}`}
+                text={`${this.props.clearLabel}${isMobile ? "" : " " + this.props.allLabel}`}
                 isMobile={isMobile}
                 style={{
                   borderRight: isMobile ? "2px solid lightgray" : undefined,
@@ -178,6 +188,9 @@ export default class Actions extends React.Component<
                 this.props.showLegendOpenAlwaysForDesktop
               }
               openLegendInitially={this.props.openLegendInitially}
+              legendLabel={this.props.legendLabel}
+              currency={this.props.currency}
+              language={this.props.language}
             />
           </ActionGroup>
         )}

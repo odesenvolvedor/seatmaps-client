@@ -22,6 +22,9 @@ export interface Props {
   isMobile?: boolean;
   showLegendOpenAlwaysForDesktop?: boolean;
   openLegendInitially?: boolean;
+  legendLabel?: string;
+  currency?: string;
+  language?: string;
 }
 
 interface State {
@@ -39,6 +42,13 @@ export default class Legend extends Component<Props, State> {
     isOpen: this.props.openLegendInitially || false,
   };
 
+  private formatPrice(value: number): string {
+    return new Intl.NumberFormat(this.props.language, {
+      style: 'currency',
+      currency: this.props.currency || 'USD',
+    }).format(value);
+  }
+
   render() {
     const { isOpen } = this.state;
     const { ranges, isMobile, showLegendOpenAlwaysForDesktop } = this.props;
@@ -55,15 +65,15 @@ export default class Legend extends Component<Props, State> {
           }}
         >
           <h3 style={{ padding: "0 0 0 8px", textAlign: "left" }}>
-            Map Legend
+            {this.props.legendLabel || "Map Legend"}
           </h3>
           {ranges.map((range) => (
             <div key={range.color} style={{ padding: 8, textAlign: "left" }}>
               <Swatch color={range.color} style={{ marginRight: 8 }} />
               <span>
-                {formatCurrency(Math.floor(range.min))}
+                {this.formatPrice(Math.floor(range.min))}
                 {" - "}
-                {formatCurrency(Math.ceil(range.max))}
+                {this.formatPrice(Math.ceil(range.max))}
               </span>
             </div>
           ))}
@@ -74,7 +84,7 @@ export default class Legend extends Component<Props, State> {
         <Button
           onClick={() => this.setState({ isOpen: !isOpen })}
           icon={isOpen ? <IconChevronUp /> : <IconChevronDown />}
-          text={`${isOpen ? "Hide " : "Show "}Map Legend`}
+          text={this.props.legendLabel || "Map Legend"}
           isMobile={isMobile}
         />
         {ranges.length > 0 && isOpen && (
@@ -91,9 +101,9 @@ export default class Legend extends Component<Props, State> {
               <div key={range.color} style={{ padding: 8, textAlign: "left" }}>
                 <Swatch color={range.color} style={{ marginRight: 8 }} />
                 <span>
-                  {formatCurrency(Math.floor(range.min))}
+                  {this.formatPrice(Math.floor(range.min))}
                   {" - "}
-                  {formatCurrency(Math.ceil(range.max))}
+                  {this.formatPrice(Math.ceil(range.max))}
                 </span>
               </div>
             ))}
