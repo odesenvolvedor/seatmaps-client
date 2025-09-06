@@ -176,7 +176,13 @@ export default class Actions extends React.Component<
               />
             )}
             {isMobile && showLegend && (
-              <Legend isMobile ranges={this.props.ranges} />
+              <Legend
+                isMobile
+                ranges={this.props.ranges}
+                legendLabel={this.props.legendLabel}
+                currency={this.props.currency}
+                language={this.props.language}
+              />
             )}
           </ActionGroup>
         )}
